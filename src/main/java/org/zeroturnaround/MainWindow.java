@@ -9,7 +9,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -18,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
-import javax.swing.border.Border;
 
 public class MainWindow extends JFrame {
+
   public MainWindow() {
     setSize(400, 400);
     setTitle("Awesome Keytool");
@@ -40,8 +39,15 @@ public class MainWindow extends JFrame {
     JComponent convertPane = initConvertPane();
     tabbedPane.addTab("Convert File", convertPane);
 
-    
+    JComponent prefPane = initPrefPane();
+    tabbedPane.addTab("Preferences", prefPane);
+
     getContentPane().add(tabbedPane);
+  }
+
+  private JComponent initPrefPane() {
+    JPanel panel = new JPanel();
+    return panel;
   }
 
   private JComponent initConvertPane() {
@@ -138,13 +144,13 @@ public class MainWindow extends JFrame {
     };
 
     mainPane.setTransferHandler(th);
-    
+
     mainPane.setLayout(new GridBagLayout());
     GridBagConstraints gc = new GridBagConstraints();
-    
+
     JLabel label = new JLabel("Drag file");
     mainPane.add(label, gc);
-    
+
     return mainPane;
   }
 }
