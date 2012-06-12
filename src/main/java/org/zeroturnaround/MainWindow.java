@@ -1,5 +1,8 @@
 package org.zeroturnaround;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -7,8 +10,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 import javax.swing.border.Border;
 
@@ -18,16 +26,83 @@ public class MainWindow extends JFrame {
     setTitle("Awesome Keytool");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    initMainPane();
+    initGUI();
 
     setVisible(true);
   }
 
-  private void initMainPane() {
-    JPanel mainPane = new JPanel();
+  private void initGUI() {
+    JTabbedPane tabbedPane = new JTabbedPane();
 
-    Border border = BorderFactory.createTitledBorder("Drag file");
-    mainPane.setBorder(border);
+    JComponent dragFilePane = initDragPane();
+    tabbedPane.addTab("Drag File", dragFilePane);
+
+    JComponent convertPane = initConvertPane();
+    tabbedPane.addTab("Convert File", convertPane);
+
+    
+    getContentPane().add(tabbedPane);
+  }
+
+  private JComponent initConvertPane() {
+    JPanel panel = new JPanel();
+
+    // 1st row
+    GridBagLayout gbl = new GridBagLayout();
+    GridBagConstraints gc = new GridBagConstraints();
+    panel.setLayout(gbl);
+
+    JLabel label = new JLabel("Source");
+    gc.fill = GridBagConstraints.HORIZONTAL;
+    gc.weightx = 1.0;
+    gc.gridx = 0;
+    gc.gridy = 0;
+    gc.insets = new Insets(0, 20, 0, 0);
+    panel.add(label, gc);
+
+    JTextField textField = new JTextField("/home/toomasr/tmp/private.pem");
+    textField.setEnabled(false);
+    gc.insets = new Insets(0, 0, 0, 20);
+    gc.gridx = 1;
+    gc.gridy = 0;
+    panel.add(textField, gc);
+
+    // 2nd row
+
+    label = new JLabel("Type");
+    gc.insets = new Insets(0, 20, 0, 0);
+    gc.gridx = 0;
+    gc.gridy = 1;
+    panel.add(label, gc);
+
+    textField = new JTextField("PEM x509 Certificate");
+    textField.setEnabled(false);
+    gc.insets = new Insets(0, 0, 0, 20);
+    gc.gridx = 1;
+    gc.gridy = 1;
+    panel.add(textField, gc);
+
+    // 3rd row
+
+    label = new JLabel("Convert");
+    gc.insets = new Insets(0, 20, 0, 0);
+    gc.gridx = 0;
+    gc.gridy = 2;
+    panel.add(label, gc);
+
+    String[] petStrings = { "Choose", "PEM" };
+    JComboBox petList = new JComboBox(petStrings);
+    gc.insets = new Insets(0, 0, 0, 20);
+    gc.gridx = 1;
+    gc.gridy = 2;
+    panel.add(petList, gc);
+    // //
+
+    return panel;
+  }
+
+  private JComponent initDragPane() {
+    JPanel mainPane = new JPanel();
 
     TransferHandler th = new TransferHandler() {
 
@@ -63,7 +138,13 @@ public class MainWindow extends JFrame {
     };
 
     mainPane.setTransferHandler(th);
-
-    getContentPane().add(mainPane);
+    
+    mainPane.setLayout(new GridBagLayout());
+    GridBagConstraints gc = new GridBagConstraints();
+    
+    JLabel label = new JLabel("Drag file");
+    mainPane.add(label, gc);
+    
+    return mainPane;
   }
 }
