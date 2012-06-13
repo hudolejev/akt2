@@ -47,6 +47,27 @@ public class MainWindow extends JFrame {
 
   private JComponent initPrefPane() {
     JPanel panel = new JPanel();
+
+    // 1st row
+    GridBagLayout gbl = new GridBagLayout();
+    GridBagConstraints gc = new GridBagConstraints();
+    panel.setLayout(gbl);
+
+    JLabel label = new JLabel("OpenSSL");
+    gc.fill = GridBagConstraints.HORIZONTAL;
+    gc.weightx = 1.0;
+    gc.gridx = 0;
+    gc.gridy = 0;
+    gc.insets = new Insets(0, 20, 0, 0);
+    panel.add(label, gc);
+
+    JTextField textField = new JTextField(Settings.getOpenSSLExec());
+    textField.setEnabled(false);
+    gc.insets = new Insets(0, 0, 0, 20);
+    gc.gridx = 1;
+    gc.gridy = 0;
+    panel.add(textField, gc);
+
     return panel;
   }
 
