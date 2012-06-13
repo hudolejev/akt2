@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
 
   public MainWindow() {
     setSize(400, 400);
-    setTitle("Awesome Keytool");
+    setTitle("Awesome Keytool 2");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     initGUI();
