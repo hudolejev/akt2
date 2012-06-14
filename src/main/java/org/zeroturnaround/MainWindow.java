@@ -87,7 +87,8 @@ public class MainWindow extends JFrame {
     gc.insets = new Insets(0, 20, 0, 0);
     panel.add(label, gc);
 
-    JTextField textField = new JTextField("/home/toomasr/tmp/private.pem");
+    String tmpPath = System.getProperty("user.home") + System.getProperty("file.separator") + "tmp";
+    JTextField textField = new JTextField(tmpPath + System.getProperty("file.separator") + "private.pem");
     textField.setEnabled(false);
     gc.insets = new Insets(0, 0, 0, 20);
     gc.gridx = 1;
