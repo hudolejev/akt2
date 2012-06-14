@@ -14,22 +14,21 @@ public class Akt2 {
   }
 
   private static final String lcOSName = System.getProperty("os.name").toLowerCase();
+  public static final boolean IS_LINUX = lcOSName.startsWith("linux");
   public static final boolean IS_MAC = lcOSName.startsWith("mac os x");
 
   public static void main(String[] args) {
     log.debug("Starting app");
-    macInit();
+    init();
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
         new MainWindow();
       }
-
     });
-
   }
 
-  private static void macInit() {
+  private static void init() {
     if (IS_MAC) {
       try {
         log.debug("Applying Mac OS specific settings");
@@ -39,6 +38,14 @@ public class Akt2 {
       }
       catch (Exception e) {
         log.debug("Problem setting MAC specific settings", e);
+      }
+    } else if (IS_LINUX) {
+      try {
+        log.debug("Applying Linux specific settings");
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      }
+      catch (Exception e) {
+        log.debug("Problem setting Linux specific settings", e);
       }
     }
   }
